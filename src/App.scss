@@ -1,1 +1,40 @@
-// style go here
+body {
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.app {
+  padding-top: 40px;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.carousel-settings {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 0 4px grey;
+  border-radius: 1rem;
+  margin-bottom: 40px;
+
+  &__input {
+    width: 80px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}

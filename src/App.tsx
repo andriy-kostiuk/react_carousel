@@ -4,6 +4,11 @@ import Carousel from './components/Carousel';
 
 interface State {
   images: string[];
+  step: number;
+  frameSize: number;
+  itemWidth: number;
+  animationDuration: number;
+  infinite: boolean;
 }
 
 class App extends React.Component<{}, State> {
@@ -20,17 +25,111 @@ class App extends React.Component<{}, State> {
       './img/9.png',
       './img/10.png',
     ],
+    step: 1,
+    frameSize: 3,
+    itemWidth: 130,
+    animationDuration: 1000,
+    infinite: false,
+  };
+
+  handleChangeInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = evt.target;
+
+    this.setState(newState => {
+      let res = {};
+
+      switch (name) {
+        case 'infinite':
+          res = { [name]: checked };
+          break;
+        default:
+          res = { [name]: +value };
+      }
+
+      return {
+        ...newState,
+        ...res,
+      };
+    });
   };
 
   render() {
-    const { images } = this.state;
+    const { images, step, frameSize, itemWidth, animationDuration, infinite } =
+      this.state;
 
     return (
-      <div className="App">
-        {/* eslint-disable-next-line */}
-        <h1>Carousel with {images.length} images</h1>
+      <div className="app">
+        <h1 className="app__title" data-cy="title">
+          Carousel with {images.length} images
+        </h1>
+        <form className="carousel-settings" action="">
+          <label className="carousel-settings__item" htmlFor="width">
+            Item width:
+            <input
+              className="carousel-settings__input"
+              id="width"
+              name="itemWidth"
+              type="number"
+              value={itemWidth}
+              onChange={this.handleChangeInput}
+            />
+          </label>
+          <label className="carousel-settings__item" htmlFor="size">
+            Frame size:
+            <input
+              className="carousel-settings__input"
+              name="frameSize"
+              id="size"
+              type="number"
+              value={frameSize}
+              onChange={this.handleChangeInput}
+            />
+          </label>
+          <label className="carousel-settings__item" htmlFor="step">
+            Frame step:
+            <input
+              className="carousel-settings__input"
+              name="step"
+              id="step"
+              type="number"
+              value={step}
+              onChange={this.handleChangeInput}
+            />
+          </label>
+          <label
+            className="carousel-settings__item"
+            htmlFor="animation_duration"
+          >
+            Animation duration:
+            <input
+              className="carousel-settings__input"
+              name="animationDuration"
+              id="animation_duration"
+              type="number"
+              value={animationDuration}
+              onChange={this.handleChangeInput}
+            />
+          </label>
+          <label className="carousel-settings__item" htmlFor="infinite">
+            Infinite:
+            <input
+              name="infinite"
+              id="infinite"
+              type="checkbox"
+              checked={infinite}
+              onChange={this.handleChangeInput}
+            />
+          </label>
+        </form>
 
-        <Carousel />
+        <Carousel
+          images={images}
+          step={step}
+          frameSize={frameSize}
+          itemWidth={itemWidth}
+          animationDuration={animationDuration}
+          infinite={infinite}
+        />
       </div>
     );
   }
